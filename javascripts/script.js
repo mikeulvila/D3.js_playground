@@ -1,38 +1,19 @@
-// var myStyles = [
-//   { width: 200,
-//     name: 'Mike',
-//     color: '#A57706'},
-//   { width: 230,
-//     name: 'Alli',
-//     color: '#BD3613'},
-//   { width: 220,
-//     name: 'Jackson',
-//     color: '#D11C24'},
-//   { width: 290,
-//     name: 'Brynn',
-//     color: '#C61C6F'},
-//   { width: 236,
-//     name: 'Knox',
-//     color: '#595AB7'},
-//   { width: 230,
-//     name: 'Emmett',
-//     color: '#2176C7'}
-// ]
+d3.select('#chart')
+  .append('svg')
+    .attr('width', 600)
+    .attr('height', 400)
+    .style('background', '#93A1A1')
+  .append('rect')
+    .attr('x', 200)
+    .attr('y', 100)
+    .attr('width', 200)
+    .attr('height', 200)
+    .style('fill', '#CB4B19')
+  d3.select('svg')
+    .append('circle')
+    .attr('cx', '300')
+    .attr('cy', '200')
+    .attr('r', '50')
+    .style('fill', '#840043')
 
 
-// d3.selectAll('#chart').selectAll('div')
-//   .data(myStyles)
-//   .enter().append('div')
-//   .classed('item', true)
-//   .text(function (d) {
-//      return d.name;
-//   })
-//   .style({
-//     'color': 'white',
-//     'background': function (d) {
-//       return d.color;
-//     },
-//     'width': function (d) {
-//       return d.width + 'px';
-//     }
-//   });
