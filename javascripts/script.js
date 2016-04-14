@@ -1,3 +1,6 @@
-d3.select('#chart')
-  .insert('span', ':nth-child(3)')
-  .html('<strong>Selection</strong>')
+d3.selectAll('.item:nth-child(3)')
+  .classed({
+    'highlight': true,
+    'item': false,
+    'bigger': true
+  })
