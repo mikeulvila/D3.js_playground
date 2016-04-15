@@ -39,3 +39,15 @@ d3.select('#chart').append('svg')
     .attr('y', function (data) {
        return height - yScale(data);
     })
+
+  .on('mouseover', function (data) {
+    tempColor = this.style.fill;
+     d3.select(this)
+        .style('opacity', .5)
+        .style('fill', 'yellow')
+  })
+  .on('mouseout', function (data) {
+     d3.select(this)
+      .style('opacity', 1)
+      .style('fill', tempColor)
+  })
