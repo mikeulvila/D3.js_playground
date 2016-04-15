@@ -1,8 +1,10 @@
 var bardata = [];
 
 for (var i=0; i < 100; i++) {
-  bardata.push(Math.random()*30)
+  bardata.push(Math.round(Math.random()*30))
 }
+
+var tempColor;
 
 var height = 400,
     width = 600,
@@ -21,6 +23,13 @@ var xScale = d3.scale.ordinal()
              .domain(d3.range(0, bardata.length))
              .rangeBands([0, width])
 
+var tooltip = d3.select('body').append('div')
+              .style('position', 'absolute')
+              .style('width', '60px')
+              .style('padding', '0 10px')
+              .style('background', 'white')
+              .style('opacity', 0)
+
 var myChart = d3.select('#chart').append('svg')
   .attr('width', width)
   .attr('height', height)
@@ -37,12 +46,23 @@ var myChart = d3.select('#chart').append('svg')
     .attr('y', height)
 
   .on('mouseover', function (data) {
+
     tempColor = this.style.fill;
      d3.select(this)
         .style('opacity', .5)
         .style('fill', 'yellow')
+
+    tooltip.transition()
+      .style('opacity', .9);
+
+    tooltip.html(data)
+      .style("left", (d3.event.pageX) + "px")
+      .style("top", (d3.event.pageY) + "px");
+
   })
+
   .on('mouseout', function (data) {
+
      d3.select(this)
       .style('opacity', 1)
       .style('fill', tempColor)
