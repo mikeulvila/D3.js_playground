@@ -21,7 +21,7 @@ var xScale = d3.scale.ordinal()
              .domain(d3.range(0, bardata.length))
              .rangeBands([0, width])
 
-d3.select('#chart').append('svg')
+var myChart = d3.select('#chart').append('svg')
   .attr('width', width)
   .attr('height', height)
   .selectAll('rect').data(bardata)
@@ -30,15 +30,11 @@ d3.select('#chart').append('svg')
        return colors(index);
     })
     .attr('width', xScale.rangeBand())
-    .attr('height', function (data) {
-       return yScale(data);
-    })
+    .attr('height', 0)
     .attr('x', function (data, index) {
        return xScale(index);
     })
-    .attr('y', function (data) {
-       return height - yScale(data);
-    })
+    .attr('y', height)
 
   .on('mouseover', function (data) {
     tempColor = this.style.fill;
@@ -51,3 +47,29 @@ d3.select('#chart').append('svg')
       .style('opacity', 1)
       .style('fill', tempColor)
   })
+
+myChart.transition()
+  .attr('height', function (data) {
+     return yScale(data);
+  })
+  .attr('y', function (data) {
+     return height - yScale(data);
+  })
+  .delay(function (d, i) {
+     return i * 20;
+  })
+  .ease('elastic')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
