@@ -10,8 +10,11 @@ bardata.sort(function compareNumbers (a, b) {
 
 var tempColor;
 
-var height = 400,
-    width = 600,
+var margin = { top: 30, right: 30, bottom: 40, left: 50};
+
+
+var height = 400 - margin.top - margin.bottom,
+    width = 600 - margin.left - margin.right,
     barWidth = 50,
     barOffset = 5;
 
@@ -25,7 +28,7 @@ var yScale = d3.scale.linear()
 
 var xScale = d3.scale.ordinal()
              .domain(d3.range(0, bardata.length))
-             .rangeBands([0, width])
+             .rangeBands([0, width], .2)
 
 var tooltip = d3.select('body').append('div')
               .style('position', 'absolute')
@@ -35,9 +38,11 @@ var tooltip = d3.select('body').append('div')
               .style('opacity', 0)
 
 var myChart = d3.select('#chart').append('svg')
-  .attr('width', width)
-  .attr('height', height)
+  .style('background', '#E7E0CB')
+  .attr('width', width + margin.left + margin.right)
+  .attr('height', height + margin.top + margin.bottom)
   .append('g')
+  .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
   .selectAll('rect').data(bardata)
   .enter().append('rect')
     .style('fill', function (data, index) {
@@ -97,7 +102,7 @@ var vAxis = d3.svg.axis()
 var vGuide = d3.select('svg').append('g')
     vAxis(vGuide)
 
-    vGuide.attr('transform', 'translate(35, 10)')
+    vGuide.attr('transform', 'translate(' + margin.left + ', ' + margin.top +')')
     vGuide.selectAll('path')
       .style({ fill: 'none', stroke: '#000' })
     vGuide.selectAll('path')
@@ -112,7 +117,8 @@ var hAxis = d3.svg.axis()
 
 var hGuide = d3.select('svg').append('g')
     hAxis(hGuide)
-    hGuide.attr('transform', 'translate(0, ' + (height-30) + ')')
+    hGuide.attr('transform', 'translate(' + margin.left + ', ' + (height + margin.top) +')')
+
     hGuide.selectAll('path')
       .style({ fill: 'none', stroke: '#000' })
     hGuide.selectAll('path')
