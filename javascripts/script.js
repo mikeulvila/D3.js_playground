@@ -1,7 +1,7 @@
 var bardata = [];
 
 for (var i=0; i < 50; i++) {
-  bardata.push(Math.round(Math.random()*30))
+  bardata.push(Math.round(Math.random()*100))
 }
 
 bardata.sort(function compareNumbers (a, b) {
@@ -103,7 +103,20 @@ var vGuide = d3.select('svg').append('g')
     vGuide.selectAll('path')
       .style({ stroke: '#000' })
 
+var hAxis = d3.svg.axis()
+  .scale(xScale)
+  .orient('bottom')
+  .tickValues(xScale.domain().filter(function (d, i) {
+     return !(i % (bardata.length/5));
+  }))
 
+var hGuide = d3.select('svg').append('g')
+    hAxis(hGuide)
+    hGuide.attr('transform', 'translate(0, ' + (height-30) + ')')
+    hGuide.selectAll('path')
+      .style({ fill: 'none', stroke: '#000' })
+    hGuide.selectAll('path')
+      .style({ stroke: '#000' })
 
 
 
