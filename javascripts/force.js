@@ -1,5 +1,7 @@
-var w = 900,
+var w = 400,
     h = 400;
+
+var circleWidth = 5;
 
 
 var palette = {
@@ -39,11 +41,73 @@ for (var i=0; i< nodes.length; i++) {
     for (var x = 0; x < nodes[i].target.length; x++) {
       links.push({
         source: nodes[i],
-        target: nodes[i].target[x]
+        target: nodes[nodes[i].target[x]]
       })
     }
   }
 }
+
+var myChart = d3.select('#chart')
+  .append('svg')
+  .attr('width', w)
+  .attr('height', h)
+
+var force = d3.layout.force()
+  .nodes(nodes)
+  .links([])
+  .gravity(0.1)
+  .charge(-1000)
+  .size([w, h])
+
+var link = myChart.selectAll('line')
+  .data(links).enter().append('line')
+  .attr('stroke', palette.gray)
+
+var node = myChart.selectAll('circle')
+  .data(nodes).enter()
+  .append('g')
+  .call(force.drag)
+
+node.append('circle')
+  .attr('cx', function (d) {
+     return d.x;
+  })
+  .attr('cy', function (d) {
+     return d.y;
+  })
+  .attr('r', circleWidth)
+  .attr('fill', palette.pink)
+
+force.on('tick', function (event) {
+   node.attr('transform', function (d, i) {
+      return 'translate('+ d.x + ', ' + d.y + ')';
+   })
+
+   link.attr('x1', function(d) { return d.source.x })
+   link.attr('y1', function(d) { return d.source.y })
+   link.attr('x2', function(d) { return d.target.x })
+   link.attr('y2', function(d) { return d.target.y })
+})
+
+
+
+force.start();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
