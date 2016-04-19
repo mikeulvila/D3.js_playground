@@ -1,4 +1,4 @@
-var w = 400,
+var w = 900,
     h = 400;
 
 var circleWidth = 5;
@@ -76,7 +76,54 @@ node.append('circle')
      return d.y;
   })
   .attr('r', circleWidth)
-  .attr('fill', palette.pink)
+  .attr('fill', function (d, i) {
+     if (i>0) {
+      return palette.pink
+     } else {
+      return palette.blue
+     }
+  })
+
+node.append('text')
+  .text(function (d) {
+     return d.name;
+  })
+  .attr('font-family', 'Roboto Slab')
+  .attr('fill', function (d, i) {
+     if (i>0) {
+      return palette.mediumgray
+     } else {
+      return palette.yellowgreen
+     }
+  })
+  .attr('x', function (d, i) {
+     if (i>0) {
+      return circleWidth + 4;
+     } else {
+      return circleWidth -15;
+     }
+  })
+  .attr('y', function (d, i) {
+     if (i>0) {
+      return circleWidth
+     } else {
+      return 8
+     }
+  })
+  .attr('text-anchor', function (d, i) {
+     if (i>0) {
+      return 'beginning'
+     } else {
+      return 'end'
+     }
+  })
+  .attr('font-size', function (d, i) {
+     if (i>0) {
+      return '1em'
+     } else {
+      return '1.8em'
+     }
+  })
 
 force.on('tick', function (event) {
    node.attr('transform', function (d, i) {
